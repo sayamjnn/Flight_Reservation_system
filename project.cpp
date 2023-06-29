@@ -70,7 +70,7 @@ class seat
         }
 };
 
-class airplane()
+class airplane
 {
     public:
            int modelNumber;
@@ -91,7 +91,7 @@ class airplane()
          
     
 
-}
+};
 int main()
 {
     route r("hubli","bangalore","hyderabad");
