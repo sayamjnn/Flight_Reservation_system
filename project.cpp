@@ -33,63 +33,188 @@ class seat
     public:
          int defaultprice;
          int seatnumber;
-         string typeOfSeat;
     public:
          seat()
         {
             defaultprice=0;
             seatnumber=0;
-            typeOfSeat="";
         }
         seat(int defaultprice,int seatnumber,string typeOfSeat)
         {
             this->defaultprice=defaultprice;
             this->seatnumber=seatnumber;
-            this->typeOfSeat=typeOfSeat;
         }
         void printSeat()
         {
             cout<<"defaultprice:"<<defaultprice<<endl;
             cout<<"seatnumber:"<<seatnumber<<endl;
-            cout<<"typeOfSeat:"<<typeOfSeat<<endl;
-        }
-        void updatePrice()
-        {
-            if(typeOfSeat=="economy class")
-            {
-                defaultprice=defaultprice;
-            }
-            else if(typeOfSeat=="business class")
-            {
-                defaultprice+=1500;
-            }
-            else if(typeOfSeat=="first class")
-            {
-                defaultprice+=3000;
-            }
-        }
-};
 
+        }
+        virtual void bookSeat()=0;
+       
+};
+class economy:public seat{
+public:
+int seats[20][20];
+
+economy():seat()
+{
+    for(int i=0;i<20;i++)
+{
+    for(int j=0;j<20;j++)
+    {
+        seats[i][j]=0;
+    }
+}
+}
+string bookseat()
+{
+    string position;
+  for(int i=0;i<20;i++)
+  {
+    position+=i;
+
+    for(int j=0;j<20;j++)
+    {
+        if(seats[i][j]==0)
+        {
+            seats[i][j]=1;
+            position+=j;
+            return position;
+        }
+    }
+}
+return "Not found";
+}
+};
+class business:public seat{
+public:
+int seats[20][20];
+
+int price;
+business():seat()
+{
+    for(int i=0;i<20;i++)
+{
+    for(int j=0;j<20;j++)
+    {
+        seats[i][j]=0;
+    }
+} 
+}
+string bookseat()
+{
+    string position;
+  for(int i=0;i<20;i++)
+  {
+    position+=i;
+
+    for(int j=0;j<20;j++)
+    {
+        if(seats[i][j]==0)
+        {
+            seats[i][j]=1;
+            position+=j;
+            return position;
+        }
+    }
+  }
+return "Not found";
+}
+};
+class firstClass:public seat{
+public:
+int seats[20][20];
+
+firstClass():seat()
+{
+     for(int i=0;i<20;i++)
+{
+    for(int j=0;j<20;j++)
+    {
+        seats[i][j]=0;
+    }
+}
+}
+string bookseat()
+{
+    string position;
+  for(int i=0;i<20;i++)
+  {
+    position+=i;
+
+    for(int j=0;j<20;j++)
+    {
+        if(seats[i][j]==0)
+        {
+            seats[i][j]=1;
+            position+=j;
+            return position;
+        }
+    }
+  }
+return "Not found";
+}
+};
 class airplane
 {
     public:
            int modelNumber;
            int capacity;
-           route route;
-           seat seat;
+           route* route;
+           int typeOfSeat;
+           economy* economySeats;
+           business* businessSeats;
+           firstClass* firstClassSeats;
     public:
          airplane()
          {
             modelNumber=0;
             capacity=0;
          }
-         airplane(modelNumber,capacity)
+         airplane(int modelNumber,int capacity)
          {
             this->modelNumber=modelNumber;
             this->capacity=capacity;
          }
-         
-    
+         void selecteSeat()
+         {
+            string a;
+            cout<<"Select Type of seat"<<endl;
+            cout<<"1:Economy seat"<<endl;
+            cout<<"2:Business seat"<<endl;
+            cout<<"3:First class seat"<<endl;
+            cout<<"4:skip"<<endl;
+            cin>>typeOfSeat;
+            if(typeOfSeat==1)
+            {
+                  a=economySeats->bookseat();
+                  if(a=="Not found")
+                  {
+                    throw "All Seats Booked";
+                  }
+                  else
+                  {
+
+                  }
+            }
+
+         }
+          void updatePrice()
+        {
+            if(typeOfSeat=="economy class")
+            {
+                
+            }
+            else if(typeOfSeat=="business class")
+            {
+                
+            }
+            else if(typeOfSeat=="first class")
+            {
+                
+            }
+        }
 
 };
 int main()
