@@ -1,4 +1,6 @@
 #include<iostream>
+#include <vector>
+#include <sstream>
 using namespace std;
 class route
 {
@@ -159,7 +161,7 @@ return "Not found";
 class airplane
 {
     public:
-           int modelNumber;
+           int ID;
            int capacity;
            route* route;
            int typeOfSeat;
@@ -169,15 +171,15 @@ class airplane
     public:
          airplane()
          {
-            modelNumber=0;
+            ID=0;
             capacity=0;
          }
          airplane(int modelNumber,int capacity)
          {
-            this->modelNumber=modelNumber;
+            this->ID=modelNumber;
             this->capacity=capacity;
          }
-         void selecteSeat()
+         string selecteSeat()
          {
             string a;
             cout<<"Select Type of seat"<<endl;
@@ -195,34 +197,157 @@ class airplane
                   }
                   else
                   {
-
+                        return a;
                   }
             }
 
          }
-          void updatePrice()
-        {
-            if(typeOfSeat=="economy class")
-            {
-                
-            }
-            else if(typeOfSeat=="business class")
-            {
-                
-            }
-            else if(typeOfSeat=="first class")
-            {
-                
-            }
-        }
+          
 
+};
+
+class passenger{
+    public:
+    string name;
+    int age;
+    char sex;
+    int mobileNM;
+    int seatNumber;
+
+    passenger( string name,int age,char sex)
+    {
+        this->name=name;
+        this->age=age;
+        this->sex=sex;
+
+    }
+
+    void printPassenger()
+    {
+
+    }
+
+    void addMobileNUmber()
+    {
+        if(this->age>=18)
+        {
+            cout<<"Enter your mobile number"<<endl;
+            cin>>this->mobileNM;
+        }else{
+            throw "NOT needed!!";
+        }
+    }
+
+
+
+};
+
+class Packages{
+    public:
+    string packageName;
+     string services;
+     int price;
+
+
+Packages(   string packageName,string services,int price){
+    this->packageName=packageName;
+    this->price=price;
+    this->services=services;
+}
+
+void printPAckage()
+{
+
+}
+
+
+
+};
+
+class Flight{
+    public:
+    string departureTime;
+    string ArrivalTime;
+    int duration;
+    string FlightNumber;
+    int defaultPrice;
+    airplane *Planes;
+    Packages *packages;
+
+    Flight(string departureTime, string ArrivalTime, string FlightNumber,int defaultPrice)
+    {
+        this->defaultPrice=defaultPrice;
+        this->ArrivalTime=ArrivalTime;
+        this->departureTime=departureTime;
+        this->FlightNumber=FlightNumber;
+        this->duration=calculateDuration();
+    }
+
+
+    int calculateDuration() {
+
+        string arHr=ArrivalTime.substr(0,2);
+        int arrivalHour=stoi(arHr);
+
+        string arMi=ArrivalTime.substr(3);
+        int arrivalMinute=stoi(arMi);
+
+        string drHr=departureTime.substr(3);
+         int departureHour=stoi(drHr);
+
+        string drMi=departureTime.substr(3);
+        int departureMinute=stoi(drMi);
+    int durationHour = departureHour - arrivalHour;
+    int durationMinute = departureMinute - arrivalMinute;
+
+    // Handling negative minutes
+    if (durationMinute < 0) {
+        durationMinute += 60;
+        durationHour--;
+    }
+
+    return (durationHour * 60) + durationMinute;
+}
+
+void addPackages()
+{
+    
+    int size = sizeof(packages) / sizeof(packages[0]);
+      for (int i = 0; i < size; i++)
+      {
+        packages[i].printPAckage();
+        cout<<endl;
+      }
+      cout<<"Enter the package you want you can select multiple packages"<<endl;
+    string input;
+    vector<int> values;
+    cout << "Enter values (press Enter to finish): ";
+
+    // Read input until the user presses Enter
+    while (getline(std::cin, input) && !input.empty()) {
+        // Convert the input string to an integer
+        int value;
+        istringstream iss(input);
+        if (iss >> value) {
+            // Store the integer value
+            values.push_back(value);
+        } else {
+           cout << "Invalid input. Please enter an integer value." << std::endl;
+        }
+    }
+
+    for(int value : values){
+         
+    }
+}
+
+void printFlight()
+{
+
+}
 };
 int main()
 {
-    route r("hubli","bangalore","hyderabad");
-    r.printRoute();
-    seat s(3500,4,"business class");
-    s.updatePrice();
-    s.printSeat();
+ 
     return 0;
 }
