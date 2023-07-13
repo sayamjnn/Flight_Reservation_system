@@ -1,7 +1,10 @@
 #include<iostream>
 #include <vector>
 #include <sstream>
+#include<ctime>
 using namespace std;
+
+
 class route
 {
     public:
@@ -30,6 +33,9 @@ class route
 
 };
 
+
+
+
 class seat
 {
     public:
@@ -55,6 +61,8 @@ class seat
         virtual void bookSeat()=0;
        
 };
+
+
 class economy:public seat{
 public:
 int seats[20][20];
@@ -89,6 +97,9 @@ string bookseat()
 return "Not found";
 }
 };
+
+
+
 class business:public seat{
 public:
 int seats[20][20];
@@ -124,6 +135,9 @@ string bookseat()
 return "Not found";
 }
 };
+
+
+
 class firstClass:public seat{
 public:
 int seats[20][20];
@@ -158,6 +172,9 @@ string bookseat()
 return "Not found";
 }
 };
+
+
+
 class airplane
 {
     public:
@@ -202,9 +219,16 @@ class airplane
             }
 
          }
-          
-
+         void printPlane()
+         {
+            cout<<"AIRPLANE ID:"<<this->ID<<endl;
+            cout<<"AIRPLANE CAPACITY:"<<this->capacity<<endl;
+            cout<<"TYPE OF SEAT:"<<this->typeOfSeat<<endl;
+         }
 };
+
+
+
 
 class passenger{
     public:
@@ -224,9 +248,14 @@ class passenger{
 
     void printPassenger()
     {
-
+     cout<<"PASSENGER NAME:"<<this->name<<endl;
+     cout<<"PASSENGER SEX:"<<this->sex<<endl;
+     cout<<"PASSENGER AGE:"<<this->age<<endl;
+     if(this->age>=18)
+     {
+        cout<<"PASSENGER MOBILE NUMBER:"<<this->mobileNM<<endl;
+     }
     }
-
     void addMobileNUmber()
     {
         if(this->age>=18)
@@ -237,32 +266,33 @@ class passenger{
             throw "NOT needed!!";
         }
     }
-
-
-
 };
+
+
 
 class Packages{
     public:
-    string packageName;
+     string packageName;
      string services;
      int price;
 
-
-Packages(   string packageName,string services,int price){
-    this->packageName=packageName;
-    this->price=price;
-    this->services=services;
+    Packages( string packageName,string services,int price){
+     this->packageName=packageName;
+     this->price=price;
+     this->services=services;
 }
 
-void printPAckage()
+void printPackage()
 {
-
+   cout<<"PACKAGE NAME:"<<this->packageName<<endl;
+   cout<<"PACKAGE SERVICES:"<<this->services<<endl;
+   cout<<"PACKAGE PRICE:"<<this->price<<endl;
 }
-
-
-
 };
+
+
+
+
 
 class Flight{
     public:
@@ -315,7 +345,7 @@ void addPackages()
     int size = sizeof(packages) / sizeof(packages[0]);
       for (int i = 0; i < size; i++)
       {
-        packages[i].printPAckage();
+        packages[i].printPackage();
         cout<<endl;
       }
       cout<<"Enter the package you want you can select multiple packages"<<endl;
@@ -337,17 +367,231 @@ void addPackages()
     }
 
     for(int value : values){
-         
+       defaultPrice+= packages[value].price;
     }
 }
 
 void printFlight()
 {
-
+ cout<<"DEPARTURE TIME:"<<this->departureTime<<endl;
+ cout<<"ARRIVAL TIME:"<<this->ArrivalTime<<endl;
+ cout<<"FLIGHT NUMBER:"<<this->FlightNumber<<endl;
+ cout<<"DEFAULT PRICE:"<<this->defaultPrice<<endl;
 }
 };
-int main()
+
+
+
+class Addones
 {
+
+    public:
+    string name;
+    string service;
+    int price;
+
+    Addones(string name,string service,int price)
+    {
+        this->name=name;
+        this->service=service;
+        this->price=price;
+
+    }
+
+    void printAddOnes()
+    {
+       cout<<"ADDONES NAME:"<<this->name<<endl;
+       cout<<"ADDONES SERVICE:"<<this->service<<endl;
+       cout<<"ADDONES PRICE:"<<this->price<<endl;
+    }
+};
+
+
+class FlightSelection
+{
+    public:
+    string from;
+    string to;
+    string date;
+    int NumberOfPassengers;
+    passenger *Passenger;
+    Addones *arrAddons;
+    Flight *flights;
+
+
+    FlightSelection( string from, string to,string date,int NumberOfPassengers){
+        this->date=date;
+        this->from=from;
+        this->NumberOfPassengers=NumberOfPassengers;
+        this->to=to;
+    }
+    void printflightselection()
+    {
+        cout<<"SOURCE"<<this->from<<endl;
+        cout<<"DESTINATION"<<this->to<<endl;
+        cout<<"DATE"<<this->date<<endl;
+        cout<<"NUMBER OF PASSENGERS"<<this->NumberOfPassengers<<endl;
+    }
+};
+
+class Payment
+{
+    public:
+    int id;
+    int amount;
+    int status;
+    string date;
+    Payment(){}
+    Payment(int id,int amount,int status,string date)
+    {
+        this->id=id;
+        this->amount=amount;
+        this->status=status;
+        this->date=date;
+    }
+    void printPaymentDetails()
+    {
+      cout<<"PAYMENT ID:"<<this->id<<endl;
+      cout<<"PAYMENT AMOUNT:"<<this->amount<<endl;
+      if(this->status==1)
+        cout<<"PAYMENT STATUS:SUCCESSFUL"<<endl;
+        else
+        cout<<"PAYMENT STATUS:UNSUCCESSFUL"<<endl;
+       cout<<"PAYMENT DATE:"<<this->date<<endl;
+    }
+    int returnStatus()
+    {
+        if(status==1)
+        return 1;
+        return 0;
+    }
+};
+class UPI
+{
+    public:
+   int pin;
+
+   UPI(int p)
+   {
+     this->pin=p;
+   }
+   
+ void validatepin(int amount)
+ {
+    int validpin;
+    cout<<"Enter the pin"<<endl;
+    cin>>validpin;
+      time_t currentTime =  time(nullptr);
+      string dateString =  ctime(&currentTime);
+    if(validpin==pin){
+       Payment *payment = new Payment(rand(),amount,1,dateString);
+    }else{
+        Payment *payment = new Payment(rand(),amount,0,dateString);
+         cout<<"Payment failed"<<endl;
+    }
+ }
+};
+class card
+{
+    public:
+    string bankName;
+    int cardNo;
+    string typeOfCard;
+    string validity;
+    int otp;
+    card(int otp)
+    {
+        string bank,card,valid;
+        int cno;
+        cout<<"Enter the card details bankname,cardNo,typeOfCard,validity(mm//yy)"<<endl;
+        cin>>bank>>cno>>card>>valid;
+        this->bankName=bank;
+        this->cardNo=cno;
+        this->typeOfCard=card;
+        this->validity=valid;
+        this->otp=otp;
+
+    }
+    int pay(int amount)
+    {
+        int itp1;
+        cout<<"Enter the otp"<<endl;
+        cin>>itp1;
+         time_t currentTime =  time(nullptr);
+      string dateString =  ctime(&currentTime);
+         if(itp1==otp){
+        Payment *payment = new Payment(rand(),amount,1,dateString);
+    } else{
+        Payment *payment = new Payment(rand(),amount,0,dateString);
+        cout<<"Payment failed"<<endl;
+    }
+    }
+};
+
+class paymentOptions
+{
+public:
+  int amount;
+  string modeOfpayment;
+  UPI *upi;
+  card *DebitCard;
+
  
-    return 0;
-}
+  paymentOptions(int amount)
+  {
+    this->amount=amount;
+    cout<<"Enter the mode of payment"<<endl;
+    cin>>this->modeOfpayment;
+  }
+
+  void selectPaymentOptions()
+  {
+      if(modeOfpayment=="UPI")
+      {
+           upi=new UPI(123456789);
+           upi->validatepin(amount);
+      }else{
+         DebitCard=new card(123);
+         DebitCard->pay(amount);
+
+      }
+  }
+
+  void printDetails()
+  {
+     cout<<"AMOUNT:"<<this->amount<<endl;
+     cout<<"MODE OF PAYMENT:"<<this->modeOfpayment<<endl;
+  } 
+};
+
+class AirlineBooking
+{
+    public:
+    int bookingId;
+    paymentOptions *payment;
+    FlightSelection *SelectFlight;
+
+    AirlineBooking()
+    {
+        this->bookingId=rand();
+    }
+
+    void printBooking()
+    {
+       cout<<"BOOKING ID:"<<this->bookingId<<endl;
+       payment->printDetails();
+       SelectFlight->printflightselection();
+    }
+};
+
+class JourneyDetails
+{
+    public:
+    AirlineBooking *Book;
+    
+    void printJourneyDetails()
+    {
+      Book->printBooking();
+    }
+
+};
