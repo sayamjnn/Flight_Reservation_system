@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Hp/OneDrive/Desktop/data structure/DATA_STRUCTURE/Flight_Reservation_system",
-      "program": "c:/Users/Hp/OneDrive/Desktop/data structure/DATA_STRUCTURE/Flight_Reservation_system/build/Debug/outDebug",
+      "cwd": "c:/Users/Hp/OneDrive/Desktop/data structure/DATA_STRUCTURE/project/Flight_Reservation_system",
+      "program": "c:/Users/Hp/OneDrive/Desktop/data structure/DATA_STRUCTURE/project/Flight_Reservation_system/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

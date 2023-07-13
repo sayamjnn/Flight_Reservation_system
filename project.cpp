@@ -432,6 +432,50 @@ class FlightSelection
         cout<<"DATE"<<this->date<<endl;
         cout<<"NUMBER OF PASSENGERS"<<this->NumberOfPassengers<<endl;
     }
+
+    vector<Flight> MatchedFlights;
+
+    void AddMatchedFlights()
+    {
+
+        int size=sizeof(flights)/sizeof(flights[0]);
+       for(int i=0;i<size;i++)
+       {
+             if(flights[i].Planes->route->from==from&&flights[i].Planes->route->to==to)
+             {
+                  MatchedFlights.push_back(flights[i]);
+             }
+       }
+    }
+
+    void DisplayBasedOnDuration()
+    {
+        int size=sizeof(MatchedFlights)/sizeof(MatchedFlights[0]);
+
+          for(int i=0;i<size-1;i++)
+          {
+            int status=0;
+            for(int j=0;j<size-i-1;j++)
+            {
+                if(MatchedFlights[j].duration>MatchedFlights[j+1].duration)
+                {
+                    Flight temp=MatchedFlights[j];
+                    MatchedFlights[j]=MatchedFlights[j+1];
+                    MatchedFlights[j+1]=temp;
+                    status=1;
+                }
+            }
+            if(status==0)
+            {
+                break;
+            }
+          }
+
+          for(Flight in:MatchedFlights)
+          {
+            in.printFlight();
+          }
+    }
 };
 
 class Payment
